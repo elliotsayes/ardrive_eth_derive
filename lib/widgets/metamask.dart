@@ -2,6 +2,7 @@ import 'dart:html';
 
 import 'package:ardrive_eth_derive/crypto/wallet.dart';
 import 'package:ardrive_eth_derive/pages/drive_key.dart';
+import 'package:ardrive_eth_derive/pages/eth_derive.dart';
 import 'package:flutter/material.dart';
 import 'package:js/js.dart';
 import 'package:webthree/browser.dart';
@@ -85,7 +86,7 @@ class _MetamaskButtonState extends State<MetamaskButton> {
 
     nav.push(
       MaterialPageRoute(
-        builder: (context) => DriveKeyPage(
+        builder: (context) => EthDerivePage(
           wallet: wallet,
           onBack: cleanup,
         ),

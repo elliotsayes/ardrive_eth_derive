@@ -1,4 +1,5 @@
 import 'package:ardrive_eth_derive/crypto/wallet.dart';
+import 'package:ardrive_eth_derive/pages/eth_derive.dart';
 import 'package:flutter/material.dart';
 import 'package:walletconnect_dart/walletconnect_dart.dart';
 import 'package:walletconnect_qrcode_modal_dart/walletconnect_qrcode_modal_dart.dart';
@@ -68,7 +69,7 @@ class _WalletConnectButtonState extends State<WalletConnectButton> {
 
       nav.push(
         MaterialPageRoute(
-          builder: (context) => DriveKeyPage(
+          builder: (context) => EthDerivePage(
             wallet: wallet,
             onBack: cleanup,
           ),
