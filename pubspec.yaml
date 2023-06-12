@@ -45,6 +45,7 @@ dependencies:
       ref: d4f7b408eecfcd067d4439a808b969daf53e2864
   webthree: ^2.5.7+2
   js: ^0.6.5
+  bip39: ^1.0.6
 
 dev_dependencies:
   flutter_test:
