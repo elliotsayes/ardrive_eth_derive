@@ -1,4 +1,4 @@
-import 'package:ardrive_eth_phase_2/crypto/wallet.dart';
+import 'package:ardrive_eth_derive/crypto/wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:walletconnect_dart/walletconnect_dart.dart';
 import 'package:walletconnect_qrcode_modal_dart/walletconnect_qrcode_modal_dart.dart';
@@ -24,60 +24,57 @@ class _WalletConnectButtonState extends State<WalletConnectButton> {
     super.initState();
     connector = WalletConnect(
       bridge: 'https://bridge.walletconnect.org',
-      clientMeta: const PeerMeta( // <-- Meta data of your app appearing in the wallet when connecting
+      clientMeta: const PeerMeta(
+        // <-- Meta data of your app appearing in the wallet when connecting
         name: 'ArFS x Ethereum',
         description: 'Phase 2 Demo',
         url: 'https://github.com/elliotsayes/ardrive_eth_phase_2',
-        icons: [
-          'https://app.ardrive.io/icons/Icon-192.png'
-        ],
+        icons: ['https://app.ardrive.io/icons/Icon-192.png'],
       ),
     );
     qrCodeModal = WalletConnectQrCodeModal(
       connector: connector,
     );
-    qrCodeModal.registerListeners(
-      onConnect: (session) async {
+    qrCodeModal.registerListeners(onConnect: (session) async {
+      setState(() {
+        buttonEnabled = false;
+      });
+      final nav = Navigator.of(context);
+      if (session.accounts.length != 1) {
         setState(() {
-          buttonEnabled = false;
+          text = "Error, non-single accounts: ${session.accounts.join(', ')}";
         });
-        final nav = Navigator.of(context);
-        if (session.accounts.length != 1) {
-          setState(() {
-            text = "Error, non-single accounts: ${session.accounts.join(', ')}";
-          });
-          return;
-        }
-
-        final account = session.accounts[0];
-        setState(() {
-          text = "Connected: $account";
-        });
-
-        await Future.delayed(const Duration(seconds: 1));
-
-        final wallet = EthWalletConnectWallet(connector, account);
-
-        void cleanup() async {
-          print('WalletConnect cleanup');
-          await connector.killSession();
-          connector.reconnect();
-          setState(() {
-            text = 'Session Closed';
-            buttonEnabled = true;
-          });
-        }
-
-        nav.push(
-          MaterialPageRoute(
-            builder: (context) => DriveKeyPage(
-              wallet: wallet,
-              onBack: cleanup,
-            ),
-          ),
-        );
+        return;
       }
-    );
+
+      final account = session.accounts[0];
+      setState(() {
+        text = "Connected: $account";
+      });
+
+      await Future.delayed(const Duration(seconds: 1));
+
+      final wallet = EthWalletConnectWallet(connector, account);
+
+      void cleanup() async {
+        print('WalletConnect cleanup');
+        await connector.killSession();
+        connector.reconnect();
+        setState(() {
+          text = 'Session Closed';
+          buttonEnabled = true;
+        });
+      }
+
+      nav.push(
+        MaterialPageRoute(
+          builder: (context) => DriveKeyPage(
+            wallet: wallet,
+            onBack: cleanup,
+          ),
+        ),
+      );
+    });
   }
 
   void walletConnect() async {

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:ardrive_eth_phase_2/crypto/kdf.dart';
+import 'package:ardrive_eth_derive/crypto/kdf.dart';
 import 'package:arweave/arweave.dart';
 import 'package:convert/convert.dart';
 import 'package:flutter/material.dart';
@@ -39,8 +39,8 @@ class _DriveKeyPageState extends State<DriveKeyPage> {
   void initState() {
     super.initState();
     widget.wallet.getAddress().then((value) => setState(() {
-      walletAddress = value;
-    }));
+          walletAddress = value;
+        }));
   }
 
   @override
@@ -144,7 +144,8 @@ class _DriveKeyPageState extends State<DriveKeyPage> {
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Please check your Wallet app & confirm sign.'),
+                        content: Text(
+                            'Please check your Wallet app & confirm sign.'),
                       ),
                     );
                     runDeriveDriveKey();
