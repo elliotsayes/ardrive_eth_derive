@@ -42,7 +42,7 @@ dependencies:
   arweave:
     git:
       url: https://github.com/elliotsayes/arweave-dart
-      ref: d4f7b408eecfcd067d4439a808b969daf53e2864
+      ref: 3ef22f8d5bfd988a27a060b4e2d5964da249c195
   webthree: ^2.5.7+2
   js: ^0.6.5
   bip39: ^1.0.6

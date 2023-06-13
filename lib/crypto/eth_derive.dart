@@ -6,6 +6,9 @@ import 'package:bip39/bip39.dart' as bip39;
 import 'package:convert/convert.dart';
 import 'package:cryptography/cryptography.dart';
 
+import 'stub_web_wallet.dart' // stub implementation
+    if (dart.library.html) 'web_wallet.dart';
+
 // ardrive-web/lib/services/crypto/crypto.dart
 final sha256 = Sha256();
 
@@ -25,6 +28,6 @@ Future<String> signatureToBip39Mnemonnic(Uint8List signature) async {
 }
 
 Future<Wallet> bip39MnemonnicToWallet(String bip39Mnemonnic) async {
-  final wallet = await Wallet.createWalletFromMnemonic(bip39Mnemonnic);
+  final wallet = await generateWalletFromMnemonic(bip39Mnemonnic);
   return wallet;
 }
